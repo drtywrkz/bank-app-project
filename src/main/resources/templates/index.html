@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>BangKo - Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-title">BangKo</div>
+
+<div class="container">
+
+    <!-- SUCCESS / ERROR MESSAGE -->
+    <div th:if="${message}" class="success-message">
+        <p th:text="${message}"></p>
+    </div>
+
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <h2>Login</h2>
+
+    <form th:action="@{/api/accounts/login}" method="post">
+
+        <input type="text" name="username" placeholder="Username" required>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Login</button>
+
+    </form>
+
+    <a th:href="@{/register}">Create Account</a>
+
+</div>
+
+</body>
+</html>

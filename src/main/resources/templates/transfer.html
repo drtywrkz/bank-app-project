@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Transfer</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Transfer Money</h2>
+
+  <form action="/api/accounts/transfer" method="post">
+
+    <input type="text" name="fromAccount" placeholder="From Account" required>
+
+    <input type="text" name="toAccount" placeholder="To Account" required>
+
+    <input type="number" name="amount" placeholder="Amount" required>
+
+    <button type="submit">Transfer</button>
+
+  </form>
+
+  <a href="/dashboard">Back to Dashboard</a>
+
+</div>
+
+</body>
+</html>

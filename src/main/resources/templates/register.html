@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>BangKo - Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="app-title">BangKo</div>
+
+<div class="container">
+
+    <h2>Create Account</h2>
+
+    <form action="/api/accounts/create" method="post">
+
+        <input type="text" name="username" placeholder="Username" required>
+
+        <input type="text" name="fullName" placeholder="Full Name" required>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <button type="submit">Create</button>
+
+    </form>
+
+    <a href="/">Back to Login</a>
+
+</div>
+
+</body>
+</html>

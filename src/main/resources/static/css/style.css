@@ -1,0 +1,116 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* BODY */
+body {
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* APP TITLE HEADER */
+.app-title {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    padding: 18px 30px;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+/* SUCCESS MESSAGE */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px 15px;
+    border-left: 5px solid #28a745;
+    margin: 15px auto;
+    width: 90%;
+    border-radius: 6px;
+}
+
+/* DASHBOARD GRID */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* CARD DESIGN */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-top: 30px;
+    gap: 20px;
+}
+
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* BALANCE CARD SPECIAL */
+.card.balance {
+    background: linear-gradient(135deg, #43cea2, #185a9d);
+    color: white;
+}
+
+/* BUTTONS */
+button {
+    background: #2a5298;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1e3c72;
+}
+
+/* INPUT FIELDS */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* FORM BOX */
+.form-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    max-width: 400px;
+    margin: auto;
+}
+
+/* LINKS */
+a {
+    color: #2a5298;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

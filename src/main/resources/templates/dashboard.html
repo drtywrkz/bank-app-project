@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>BangKo - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:if="${message}" class="success-message">
+    <p th:text="${message}"></p>
+</div>
+
+<div class="app-title">BangKo</div>
+
+<div class="container">
+
+    <h2>Dashboard</h2>
+
+    <div class="card" th:if="${account != null}">
+        <p><b>Full Name:</b> <span th:text="${account.fullName}"></span></p>
+        <p><b>Account Number:</b> <span th:text="${account.accountNumber}"></span></p>
+        <p><b>Balance:</b> ₱ <span th:text="${account.balance}"></span></p>
+    </div>
+
+    <div class="card">
+        <a href="/deposit">Deposit</a><br><br>
+        <a href="/withdraw">Withdraw</a><br><br>
+        <a href="/transfer">Transfer</a>
+    </div>
+
+    <a href="/">Logout</a>
+
+</div>
+
+</body>
+</html>
