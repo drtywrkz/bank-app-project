@@ -87,9 +87,13 @@ public class AccountController {
                           RedirectAttributes redirectAttributes,
                           HttpSession session) {
 
+        System.out.println("Deposit accountNumber = " + accountNumber);
+
         String result = accountService.deposit(accountNumber, amount);
 
         Account updated = accountRepository.findByAccountNumber(accountNumber);
+
+        System.out.println("Updated account = " + updated);
 
         session.setAttribute("user", updated);
 
