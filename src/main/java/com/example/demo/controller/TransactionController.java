@@ -21,6 +21,6 @@ public class TransactionController {
 
     @GetMapping("/{accountNumber}")
     public List<Transaction> getByAccount(@PathVariable String accountNumber) {
-        return transactionRepository.findByAccountNumber(accountNumber);
+        return transactionRepository.findByAccountNumberOrderByTimestampDesc(accountNumber);
     }
 }
