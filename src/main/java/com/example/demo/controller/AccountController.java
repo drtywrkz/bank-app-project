@@ -64,10 +64,17 @@ public class AccountController {
 
     // ================= WITHDRAW =================
     @PostMapping("/withdraw")
-    public String withdraw(@RequestParam String accountNumber,
-                           @RequestParam double amount,
+    public String withdraw(@RequestParam double amount,
                            RedirectAttributes redirectAttributes,
                            HttpSession session) {
+
+        Account user = (Account) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        String accountNumber = user.getAccountNumber();
 
         String result = accountService.withdraw(accountNumber, amount);
 
@@ -82,18 +89,21 @@ public class AccountController {
 
     // ================= DEPOSIT =================
     @PostMapping("/deposit")
-    public String deposit(@RequestParam String accountNumber,
-                          @RequestParam double amount,
+    public String deposit(@RequestParam double amount,
                           RedirectAttributes redirectAttributes,
                           HttpSession session) {
 
-        System.out.println("Deposit accountNumber = " + accountNumber);
+        Account user = (Account) session.getAttribute("user");
+
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        String accountNumber = user.getAccountNumber();
 
         String result = accountService.deposit(accountNumber, amount);
 
         Account updated = accountRepository.findByAccountNumber(accountNumber);
-
-        System.out.println("Updated account = " + updated);
 
         session.setAttribute("user", updated);
 

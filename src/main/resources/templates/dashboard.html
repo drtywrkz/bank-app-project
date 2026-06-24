@@ -30,6 +30,25 @@
         <a href="/transfer">Transfer</a>
     </div>
 
+    <div class="card">
+        <h3>Transaction History</h3>
+
+        <table border="1" width="100%">
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+            </tr>
+
+            <tr th:each="t : ${transactions}">
+                <td th:text="${t.transactionType}"></td>
+                <td th:text="${t.amount}"></td>
+                <td th:text="${t.timestamp}"></td>
+            </tr>
+        </table>
+
+    </div>
+
     <a href="/">Logout</a>
 
 </div>

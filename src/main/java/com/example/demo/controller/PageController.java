@@ -1,17 +1,23 @@
 package com.example.demo.controller;
-import com.example.demo.repository.AccountRepository;
-import lombok.RequiredArgsConstructor;
+
 import com.example.demo.model.Account;
+import com.example.demo.model.Transaction;
+import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.TransactionRepository;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class PageController {
 
     private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
 
     @GetMapping("/")
     public String index() {
@@ -27,14 +33,20 @@ public class PageController {
             return "redirect:/";
         }
 
-        // 🔥 ALWAYS GET FRESH DATA
+        // Get fresh account data
         Account account = accountRepository.findById(sessionAccount.getId())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
-        // 🔥 update session too (important)
         session.setAttribute("user", account);
 
+        // Transaction history
+        List<Transaction> transactions =
+                transactionRepository.findByAccountNumberOrderByTimestampDesc(
+                        account.getAccountNumber()
+                );
+
         model.addAttribute("account", account);
+        model.addAttribute("transactions", transactions);
 
         return "dashboard";
     }
@@ -43,7 +55,6 @@ public class PageController {
     public String deposit(HttpSession session) {
         if (session.getAttribute("user") == null) return "redirect:/";
         return "deposit";
-
     }
 
     @GetMapping("/withdraw")
