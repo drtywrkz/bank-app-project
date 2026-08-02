@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "accounts")
@@ -20,5 +21,6 @@ public class Account {
     private String accountNumber;
     private String fullName;
     private String password;
-    private double balance;
+    @Column(precision = 19, scale = 2)
+    private BigDecimal balance = BigDecimal.ZERO;
 }

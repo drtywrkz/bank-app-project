@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +19,7 @@ public class Transaction {
 
     private String accountNumber;
     private String transactionType;
-    private double amount;
+    @Column(precision = 19, scale = 2)
+    private BigDecimal amount = BigDecimal.ZERO;
     private LocalDateTime timestamp;
 }

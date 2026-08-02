@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/api/accounts")
@@ -64,7 +65,7 @@ public class AccountController {
 
     // ================= WITHDRAW =================
     @PostMapping("/withdraw")
-    public String withdraw(@RequestParam double amount,
+    public String withdraw(@RequestParam BigDecimal amount,
                            RedirectAttributes redirectAttributes,
                            HttpSession session) {
 
@@ -89,7 +90,7 @@ public class AccountController {
 
     // ================= DEPOSIT =================
     @PostMapping("/deposit")
-    public String deposit(@RequestParam double amount,
+    public String deposit(@RequestParam BigDecimal amount,
                           RedirectAttributes redirectAttributes,
                           HttpSession session) {
 
@@ -116,7 +117,7 @@ public class AccountController {
     @PostMapping("/transfer")
     public String transfer(@RequestParam String fromAccount,
                            @RequestParam String toAccount,
-                           @RequestParam double amount,
+                           @RequestParam BigDecimal amount,
                            RedirectAttributes redirectAttributes,
                            HttpSession session) {
 

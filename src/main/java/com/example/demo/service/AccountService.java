@@ -6,6 +6,7 @@ import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.math.BigDecimal;
 
 import java.time.LocalDateTime;
 
@@ -29,7 +30,7 @@ public class AccountService {
     }
 
     // ================= DEPOSIT =================
-    public String deposit(String accountNumber, double amount) {
+    public String deposit(String accountNumber, BigDecimal amount) {
 
         Account account = accountRepository.findByAccountNumber(accountNumber);
 
@@ -37,11 +38,11 @@ public class AccountService {
             return "Account not found";
         }
 
-        if (amount <= 0) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             return "Invalid amount";
         }
 
-        account.setBalance(account.getBalance() + amount);
+        account.setBalance(account.getBalance().add(amount));
         accountRepository.save(account);
 
         Transaction tx = Transaction.builder()
@@ -57,15 +58,15 @@ public class AccountService {
     }
 
     // ================= WITHDRAW =================
-    public String withdraw(String accountNumber, double amount) {
+    public String withdraw(String accountNumber, BigDecimal amount) {
 
         Account account = accountRepository.findByAccountNumber(accountNumber);
 
         if (account == null) return "Account not found";
 
-        if (account.getBalance() < amount) return "Insufficient balance";
+        if (account.getBalance().compareTo(amount) <= 0) return "Insufficient balance";
 
-        account.setBalance(account.getBalance() - amount);
+        account.setBalance(account.getBalance() .subtract(amount));
         accountRepository.save(account);
 
         Transaction tx = Transaction.builder()
@@ -81,7 +82,7 @@ public class AccountService {
     }
 
     // ================= TRANSFER =================
-    public String transfer(String fromAccount, String toAccount, double amount) {
+    public String transfer(String fromAccount, String toAccount, BigDecimal amount) {
 
         Account sender = accountRepository.findByAccountNumber(fromAccount);
 
@@ -90,16 +91,18 @@ public class AccountService {
         if (sender == null) return "Sender account not found";
         if (receiver == null) return "Receiver account not found";
 
-        if (amount <= 0) return "Invalid amount";
+        if (amount .compareTo(BigDecimal.ZERO) <= 0)
+            return "Invalid amount";
 
-        if (sender.getBalance() < amount) return "Insufficient balance";
+        if (sender.getBalance().compareTo(amount) < 0)
+            return "Insufficient balance";
 
         // deduct sender
-        sender.setBalance(sender.getBalance() - amount);
+        sender.setBalance(sender.getBalance() .subtract(amount));
         accountRepository.save(sender);
 
         // add receiver
-        receiver.setBalance(receiver.getBalance() + amount);
+        receiver.setBalance(receiver.getBalance() .add(amount));
         accountRepository.save(receiver);
 
         Transaction tx1 = Transaction.builder()
@@ -132,7 +135,7 @@ public class AccountService {
                 .fullName(fullName)
                 .password(password)
                 .accountNumber(accountNumber)
-                .balance(0)
+                .balance(BigDecimal.ZERO)
                 .build();
 
         accountRepository.save(account);
