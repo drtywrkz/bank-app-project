@@ -159,4 +159,50 @@ public class AccountService {
     private String generateAccountNumber() {
         return "ACC" + (100000 + new java.util.Random().nextInt(900000));
     }
+
+    // ================= UPDATE PROFILE =================
+    public Account updateProfile(String accountNumber,
+                                 String username,
+                                 String fullName,
+                                 String password) {
+
+        Account account = accountRepository.findByAccountNumber(accountNumber);
+
+        if (account == null) {
+            return null;
+        }
+
+        // Check if username is already used by another account
+        Account existingAccount = accountRepository.findByUsername(username);
+
+        if (existingAccount != null &&
+                !existingAccount.getId().equals(account.getId())) {
+            return null;
+        }
+
+        account.setUsername(username);
+        account.setFullName(fullName);
+
+        // Only change password if user entered a new one
+        if (password != null && !password.trim().isEmpty()) {
+            account.setPassword(password);
+        }
+
+        return accountRepository.save(account);
+    }
+
+    // ================= DELETE ACCOUNT =================
+    public boolean deleteAccount(String accountNumber) {
+
+        Account account = accountRepository.findByAccountNumber(accountNumber);
+
+        if (account == null) {
+            return false;
+        }
+
+        accountRepository.delete(account);
+
+        return true;
+    }
+
 }
