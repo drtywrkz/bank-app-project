@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Account Settings - BangKo</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #111;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .account-number {
+            background: #eee;
+            cursor: not-allowed;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button,
+        .cancel-btn {
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .save-btn {
+            background: #f5c400;
+            color: #111;
+            font-weight: bold;
+            flex: 1;
+        }
+
+        .cancel-btn {
+            background: #ddd;
+            color: #111;
+            flex: 1;
+        }
+
+        .danger-zone {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #ddd;
+        }
+
+        .danger-zone h2 {
+            color: #c62828;
+        }
+
+        .delete-btn {
+            width: 100%;
+            background: #c62828;
+            color: white;
+            font-weight: bold;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .error {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>⚙️ Account Settings</h1>
+
+        <p class="subtitle">
+            Manage your BangKo account information.
+        </p>
+
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="message"
+             th:if="${message}"
+             th:text="${message}">
+        </div>
+
+
+        <!-- ERROR MESSAGE -->
+        <div class="error"
+             th:if="${error}"
+             th:text="${error}">
+        </div>
+
+
+        <!-- PROFILE FORM -->
+        <form action="/api/accounts/profile/update"
+              method="post">
+
+            <div class="section">
+
+                <h2>Personal Information</h2>
+
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        th:value="${session.user.username}"
+                        required
+                >
+
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        th:value="${session.user.fullName}"
+                        required
+                >
+
+
+                <label for="accountNumber">
+                    Account Number
+                </label>
+
+                <input
+                        type="text"
+                        id="accountNumber"
+                        th:value="${session.user.accountNumber}"
+                        class="account-number"
+                        readonly
+                >
+
+            </div>
+
+
+            <div class="section">
+
+                <h2>Change Password</h2>
+
+                <label for="password">
+                    New Password
+                </label>
+
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Leave blank to keep current password"
+                >
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                        type="submit"
+                        class="save-btn">
+                    Save Changes
+                </button>
+
+                <a
+                        href="/dashboard"
+                        class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <!-- DELETE ACCOUNT -->
+        <div class="danger-zone">
+
+            <h2>Danger Zone</h2>
+
+            <p>
+                Deleting your account is permanent.
+                Your account will no longer be accessible.
+            </p>
+
+            <form
+                    action="/api/accounts/profile/delete"
+                    method="post"
+                    onsubmit="return confirmDelete();">
+
+                <button
+                        type="submit"
+                        class="delete-btn">
+                    🗑️ Delete Account
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function confirmDelete() {
+
+        return confirm(
+            "Are you sure you want to permanently delete your BangKo account?\n\n" +
+            "This action cannot be undone."
+        );
+
+    }
+
+</script>
+
+</body>
+
+</html>
